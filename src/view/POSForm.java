@@ -48,24 +48,25 @@ public class POSForm extends javax.swing.JFrame {
         }
     }
 
-    DefaultTableModel dtm;                  //data model to insert in inventory table
-    DefaultTableModel orderData;            //data model to insert in order summary table
+    private DefaultTableModel dtm;                  //data model to insert in inventory table
+    private DefaultTableModel orderData;            //data model to insert in order summary table
 
-    Transaction trans;
-    FileHandling fh;
-    Products prod;
+    private Transaction trans;
+    private FileHandling fh;
+    private Products prod;
 
     private void myInitComponents() {
         trans = new Transaction();
         fh = new FileHandling();
         prod = new Products();
         dtm = new DefaultTableModel(0, 0);
-        ImageIcon img = new ImageIcon("./resources/images/jeepney.png");
+        ImageIcon img = new ImageIcon("./src/images/logo.png");
         this.setIconImage(img.getImage());
         this.setLocationRelativeTo(null);
         btn_productPanel_Checkout.setVisible(false);
         btn_reviewPanel_ResumeShopping.setVisible(false);
         btn_reviewPanel_Checkout.setVisible(false);
+        trans.started = false;
 
         refreshProductList();
 
@@ -83,7 +84,7 @@ public class POSForm extends javax.swing.JFrame {
             public void windowClosing(WindowEvent winEvt) {
                 int n = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit", JOptionPane.YES_NO_OPTION);
                 if (n == JOptionPane.YES_OPTION) {
-                    if (!trans.complete) {
+                    if (trans.started && !trans.complete) {
                         cancelTransaction();
                     }
                     System.exit(0);
@@ -214,9 +215,9 @@ public class POSForm extends javax.swing.JFrame {
         txt_addExistingPanel_Price = new javax.swing.JTextField();
         btn_addExistingPanel_Add = new javax.swing.JButton();
         btn_addExistingPanel_Cancel = new javax.swing.JButton();
-        cmbExistingProduct = new javax.swing.JComboBox();
         lblAddStock = new javax.swing.JLabel();
         txt_addExistingPanel_AddStock = new javax.swing.JTextField();
+        cmbExistingProducts = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         itmLogout = new javax.swing.JMenuItem();
@@ -226,6 +227,7 @@ public class POSForm extends javax.swing.JFrame {
         itmInv = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new java.awt.CardLayout());
 
         mainMenu.setLayout(new java.awt.CardLayout());
@@ -315,17 +317,12 @@ public class POSForm extends javax.swing.JFrame {
             menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuPanelLayout.createSequentialGroup()
                 .addComponent(HEADER10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(126, 126, 126)
                 .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(menuPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
-                        .addComponent(btn_menuPanel_New, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(159, Short.MAX_VALUE))
-                    .addGroup(menuPanelLayout.createSequentialGroup()
-                        .addGap(126, 126, 126)
-                        .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_menuPanel_View, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_menuPanel_Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(btn_menuPanel_View, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_menuPanel_Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_menuPanel_New, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(166, Short.MAX_VALUE))
         );
 
         mainMenu.add(menuPanel, "menuCard");
@@ -913,27 +910,35 @@ public class POSForm extends javax.swing.JFrame {
 
         txt_summaryPanel_PaidAmount.setEditable(false);
         txt_summaryPanel_PaidAmount.setBackground(new java.awt.Color(255, 255, 255));
+        txt_summaryPanel_PaidAmount.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        txt_summaryPanel_PaidAmount.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         txt_summaryPanel_Total.setEditable(false);
         txt_summaryPanel_Total.setBackground(new java.awt.Color(255, 255, 255));
+        txt_summaryPanel_Total.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         txt_summaryPanel_Total.setBorder(null);
 
         txt_summaryPanel_VAT.setEditable(false);
         txt_summaryPanel_VAT.setBackground(new java.awt.Color(255, 255, 255));
+        txt_summaryPanel_VAT.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         txt_summaryPanel_VAT.setBorder(null);
 
         txt_summaryPanel_Subtotal.setEditable(false);
         txt_summaryPanel_Subtotal.setBackground(new java.awt.Color(255, 255, 255));
+        txt_summaryPanel_Subtotal.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         txt_summaryPanel_Subtotal.setBorder(null);
 
         txt_summaryPanel_ItemCount.setEditable(false);
         txt_summaryPanel_ItemCount.setBackground(new java.awt.Color(255, 255, 255));
+        txt_summaryPanel_ItemCount.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         txt_summaryPanel_ItemCount.setBorder(null);
 
         lblChange.setText("Change: ");
 
         txt_summaryPanel_Change.setEditable(false);
         txt_summaryPanel_Change.setBackground(new java.awt.Color(255, 255, 255));
+        txt_summaryPanel_Change.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        txt_summaryPanel_Change.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         tbl_Receipt.setAutoCreateRowSorter(true);
         tbl_Receipt.setModel(new javax.swing.table.DefaultTableModel(
@@ -983,8 +988,9 @@ public class POSForm extends javax.swing.JFrame {
         btn_summaryPanel_MainMenu.setBackground(new java.awt.Color(255, 153, 0));
         btn_summaryPanel_MainMenu.setFont(new java.awt.Font("Aldo the Apache", 0, 18)); // NOI18N
         btn_summaryPanel_MainMenu.setForeground(new java.awt.Color(255, 255, 255));
-        btn_summaryPanel_MainMenu.setText("Main Menu");
-        btn_summaryPanel_MainMenu.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btn_summaryPanel_MainMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/main_menu.png"))); // NOI18N
+        btn_summaryPanel_MainMenu.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btn_summaryPanel_MainMenu.setBorderPainted(false);
         btn_summaryPanel_MainMenu.setContentAreaFilled(false);
         btn_summaryPanel_MainMenu.setOpaque(true);
         btn_summaryPanel_MainMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -1012,9 +1018,9 @@ public class POSForm extends javax.swing.JFrame {
                         .addGroup(summaryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_summaryPanel_Change, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_summaryPanel_PaidAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_summaryPanel_MainMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(134, 134, 134))
+                        .addGap(65, 65, 65)
+                        .addComponent(btn_summaryPanel_MainMenu)
+                        .addGap(53, 53, 53))
                     .addGroup(summaryPanelLayout.createSequentialGroup()
                         .addGroup(summaryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTotal)
@@ -1035,7 +1041,7 @@ public class POSForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, summaryPanelLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(summaryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblItemCount)
                     .addComponent(txt_summaryPanel_ItemCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1052,7 +1058,7 @@ public class POSForm extends javax.swing.JFrame {
                     .addComponent(lblTotal)
                     .addComponent(txt_summaryPanel_Total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
-                .addGroup(summaryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(summaryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(summaryPanelLayout.createSequentialGroup()
                         .addGroup(summaryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblPaidAmount)
@@ -1062,12 +1068,9 @@ public class POSForm extends javax.swing.JFrame {
                             .addComponent(txt_summaryPanel_Change, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblChange))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblTransNo4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, summaryPanelLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(btn_summaryPanel_MainMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(38, 38, 38)))
+                        .addComponent(lblTransNo4))
+                    .addComponent(btn_summaryPanel_MainMenu))
+                .addGap(29, 29, 29)
                 .addComponent(HEADER9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -1359,14 +1362,14 @@ public class POSForm extends javax.swing.JFrame {
             }
         });
 
-        cmbExistingProduct.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbExistingProductActionPerformed(evt);
-            }
-        });
-
         lblAddStock.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblAddStock.setText("Add Stock: ");
+
+        cmbExistingProducts.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbExistingProductsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout addExistingPanelLayout = new javax.swing.GroupLayout(addExistingPanel);
         addExistingPanel.setLayout(addExistingPanelLayout);
@@ -1390,15 +1393,15 @@ public class POSForm extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, addExistingPanelLayout.createSequentialGroup()
                             .addComponent(lblPriceInv1)
                             .addGap(289, 289, 289)
-                            .addComponent(txt_addExistingPanel_Price))
+                            .addComponent(txt_addExistingPanel_Price, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, addExistingPanelLayout.createSequentialGroup()
                             .addComponent(lblAvailableStock1)
                             .addGap(202, 202, 202)
                             .addComponent(txt_addExistingPanel_AvailStock))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, addExistingPanelLayout.createSequentialGroup()
                             .addComponent(lblProductName1)
-                            .addGap(209, 209, 209)
-                            .addComponent(cmbExistingProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbExistingProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(HEADER4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1408,11 +1411,11 @@ public class POSForm extends javax.swing.JFrame {
             .addGroup(addExistingPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblAdditem1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
+                .addGap(65, 65, 65)
                 .addGroup(addExistingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblProductName1)
-                    .addComponent(cmbExistingProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                    .addComponent(cmbExistingProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
                 .addGroup(addExistingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblAvailableStock1)
                     .addComponent(txt_addExistingPanel_AvailStock, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1484,7 +1487,7 @@ public class POSForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setTransactionNumber() {
+    private void setTransactionNumber() {
         /* SET TRANSACTION NUMBER BASED ON LAST TRANSACTION FOUND IN AUDIT TRAIL */
         String toSearch = fh.readAuditTrail();
         String regEx = "\\#[0-9]{3,4}";
@@ -1510,7 +1513,7 @@ public class POSForm extends javax.swing.JFrame {
         return timeStamp;
     }
 
-    public void refreshOrderList(Transaction trans) {
+    private void refreshOrderList(Transaction trans) {
         /* Populate order list from table data */
         trans.setSubtotal(0);           //resets all transaction values first
         trans.setVATvalue(0);           //because everytime there is a change on the table
@@ -1540,6 +1543,7 @@ public class POSForm extends javax.swing.JFrame {
                 txt_productPanel_Price.setText("P" + prod.productList.get(i).getProductPrice());
                 int avail = prod.productList.get(i).getProductAvail();
                 txt_productPanel_Quantity.setText("" + avail);
+                break;
             }
         }
     }//GEN-LAST:event_cmbProductsActionPerformed
@@ -1573,42 +1577,32 @@ public class POSForm extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(this, "No order!");
                             break;
                         } else {
-                            int n = JOptionPane.showConfirmDialog(this, "Confirm order?", "Confirmation", JOptionPane.YES_NO_OPTION);
-
-                            switch (n) {
-                                case JOptionPane.YES_OPTION:
-                                    orderData = (DefaultTableModel) tbl_YourCart.getModel();
-                                    if (orderData.getRowCount() > 0) {
-                                        btn_reviewPanel_Checkout.setVisible(true);
-                                        btn_productPanel_Checkout.setVisible(true);
-                                    } else {
-                                        btn_reviewPanel_Checkout.setVisible(false);
-                                        btn_productPanel_Checkout.setVisible(false);
-                                    }
-                                    txt_reviewPanel_OrderQuantity.setText(String.valueOf(quantity));
-                                    txt_reviewPanel_Name.setText(txt_productPanel_Name.getText());
-                                    txt_reviewPanel_CurrentStock.setText(txt_productPanel_Quantity.getText());
-                                    txt_reviewPanel_Price.setText(txt_productPanel_Price.getText());
-                                    inputAccepted = true;
-
-                                    btn_reviewPanel_CancelOrder.setVisible(true);
-                                    btn_reviewPanel_ResumeShopping.setVisible(false);
-
-                                    fh.writeAuditTrail("The item: " + txt_reviewPanel_Name.getText() + " count: " + txt_reviewPanel_OrderQuantity.getText() + " selected and reviewed. " + getTimeStamp());
-
-                                    CardLayout card = (CardLayout) transactionPanel.getLayout();
-                                    card.show(transactionPanel, "orderCard");
-                                    card = (CardLayout) reviewPanel.getLayout();
-                                    card.show(reviewPanel, "details");
-                                    break;
-                                case JOptionPane.NO_OPTION:
-                                    break OUTER;
-                                default:
-                                    break;
+                            orderData = (DefaultTableModel) tbl_YourCart.getModel();
+                            if (orderData.getRowCount() > 0) {
+                                btn_reviewPanel_Checkout.setVisible(true);
+                                btn_productPanel_Checkout.setVisible(true);
+                            } else {
+                                btn_reviewPanel_Checkout.setVisible(false);
+                                btn_productPanel_Checkout.setVisible(false);
                             }
+                            txt_reviewPanel_OrderQuantity.setText(String.valueOf(quantity));
+                            txt_reviewPanel_Name.setText(txt_productPanel_Name.getText());
+                            txt_reviewPanel_CurrentStock.setText(txt_productPanel_Quantity.getText());
+                            txt_reviewPanel_Price.setText(txt_productPanel_Price.getText());
+                            inputAccepted = true;
+
+                            btn_reviewPanel_CancelOrder.setVisible(true);
+                            btn_reviewPanel_ResumeShopping.setVisible(false);
+
+                            fh.writeAuditTrail("The item: " + txt_reviewPanel_Name.getText() + " count: " + txt_reviewPanel_OrderQuantity.getText() + " selected and reviewed. " + getTimeStamp());
+
+                            CardLayout card = (CardLayout) transactionPanel.getLayout();
+                            card.show(transactionPanel, "orderCard");
+                            card = (CardLayout) reviewPanel.getLayout();
+                            card.show(reviewPanel, "details");
                         }
                     } catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(this, "Invalid input! Not a number.");
+                        JOptionPane.showMessageDialog(this, "Invalid input! (Input: not a number)");
                         break;
                     }
                 }
@@ -1623,7 +1617,7 @@ public class POSForm extends javax.swing.JFrame {
         if (orderData.getRowCount() > 0) {      //checks if cart has data on it
             double paidAmount;
             try {
-                paidAmount = Integer.parseInt(txt_cartPanel_Cash.getText());
+                paidAmount = Double.parseDouble(txt_cartPanel_Cash.getText());
 
                 if (paidAmount < trans.getTotalPrice()) {
                     JOptionPane.showMessageDialog(this, "Insufficient Money!", "Add more cash", JOptionPane.INFORMATION_MESSAGE);
@@ -1646,6 +1640,7 @@ public class POSForm extends javax.swing.JFrame {
 
                     CardLayout card = (CardLayout) transactionPanel.getLayout();
                     card.show(transactionPanel, "summaryCard");
+                    writeSoldItems();
                     fh.writeReceipt(trans, paidAmount, change); //then writes the receipt based on last transaction
                     endCurrentTransaction();                //after transaction is complete, terminates current transaction
                     tbl_Receipt.setModel(orderData);
@@ -1659,7 +1654,15 @@ public class POSForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_cartPanel_TransactActionPerformed
 
-    public void refreshProductList() {
+    private void writeSoldItems() {
+        for (model.Order item : trans.getOrderList()) {
+            String name = item.getName();
+            int count = item.getQuantity();
+            fh.writeInventoryLog("Item: " + name + " count: " + count + " removed and sold. " + getTimeStamp());
+        }
+    }
+
+    private void refreshProductList() {
         boolean fileFound = false;
         File file = new File("./resources/database/Products.csv");
         while (!fileFound) {
@@ -1678,7 +1681,7 @@ public class POSForm extends javax.swing.JFrame {
                     int stock = prod.productList.get(i).getProductAvail();
 
                     cmbProducts.addItem(name);
-                    cmbExistingProduct.addItem(name);
+                    cmbExistingProducts.addItem(name);
                     Object data[] = {name, price, stock};
 
                     dtm.addRow(data);
@@ -1706,22 +1709,25 @@ public class POSForm extends javax.swing.JFrame {
         }
     }
 
-    public void endCurrentTransaction() {
+    private void endCurrentTransaction() {
         btn_reviewPanel_ResumeShopping.setVisible(false);
         btn_reviewPanel_Checkout.setVisible(false);
         txt_productPanel_OrderQuantity.setText("");
-        
+
         fh.writeAuditTrail("Items Finalized Transaction #" + String.format("%04d", trans.transNumber) + ". " + getTimeStamp());
         fh.writeAuditTrail("Items total amount: " + String.format("%.2f %s", trans.getTotalPrice(), getTimeStamp()));
         fh.writeAuditTrail("Amount paid: " + String.format("%.2f %s", trans.getAmountPaid(), getTimeStamp()));
         fh.writeAuditTrail("Change: " + String.format("%.2f %s", trans.getChange(), getTimeStamp()));
         fh.writeAuditTrail("End Transaction #" + String.format("%04d", trans.transNumber) + ". " + getTimeStamp());
         fh.writeAuditTrail("");
+        trans.started = false;
         trans.complete = true;
         trans.transNumber++;
     }
 
-    public void cancelTransaction() {
+    private void cancelTransaction() {
+        trans.started = false;
+
         CardLayout card = (CardLayout) mainMenu.getLayout();
         card.show(mainMenu, "menuCard");
         orderData = (DefaultTableModel) tbl_YourCart.getModel();
@@ -1740,21 +1746,13 @@ public class POSForm extends javax.swing.JFrame {
     }
 
     private void btn_reviewPanel_AddToCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reviewPanel_AddToCartActionPerformed
-        int n = JOptionPane.showConfirmDialog(this, "Add this item to your cart?", "Confirmation", JOptionPane.YES_NO_OPTION);
-        switch (n) {
-            case JOptionPane.YES_OPTION:
-                addOrder();
-                btn_reviewPanel_Checkout.setVisible(true);
-                btn_reviewPanel_ResumeShopping.setVisible(true);
-                btn_reviewPanel_CancelOrder.setVisible(false);
-                JOptionPane.showMessageDialog(this, "Item added!", "Thank you for shopping with us", JOptionPane.INFORMATION_MESSAGE);
-                break;
-            case JOptionPane.NO_OPTION:
-                break;
-        }
+        addOrder();
+        btn_reviewPanel_Checkout.setVisible(true);
+        btn_reviewPanel_ResumeShopping.setVisible(true);
+        btn_reviewPanel_CancelOrder.setVisible(false);
     }//GEN-LAST:event_btn_reviewPanel_AddToCartActionPerformed
 
-    public void addOrder() {
+    private void addOrder() {
         /* called when add to cart is clicked
          adds the current order to the cart */
         orderData = (DefaultTableModel) tbl_YourCart.getModel();
@@ -1803,7 +1801,7 @@ public class POSForm extends javax.swing.JFrame {
         }
     }
 
-    public void updateProductAvail(String productName, int orderQuantity) {
+    private void updateProductAvail(String productName, int orderQuantity) {
         for (Products product : prod.productList) {
             if (product.getProductName().equals(productName)) {
                 int currAvail = product.getProductAvail();
@@ -1815,7 +1813,7 @@ public class POSForm extends javax.swing.JFrame {
         }
     }
 
-    public static boolean isEmpty(JTable jTable) {
+    private static boolean isEmpty(JTable jTable) {
         /* method to check if table is empty */
         if (jTable != null && jTable.getModel() != null) {
             return jTable.getModel().getRowCount() <= 0;
@@ -1832,6 +1830,8 @@ public class POSForm extends javax.swing.JFrame {
         } else {
             btn_productPanel_Checkout.setVisible(false);
         }
+
+        txt_productPanel_OrderQuantity.setText("");
     }//GEN-LAST:event_btn_reviewPanel_ResumeShoppingActionPerformed
 
     private void btn_cartPanel_CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cartPanel_CancelActionPerformed
@@ -1865,6 +1865,7 @@ public class POSForm extends javax.swing.JFrame {
     private void btn_reviewPanel_CancelOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reviewPanel_CancelOrderActionPerformed
         CardLayout card = (CardLayout) transactionPanel.getLayout();
         card.show(transactionPanel, "productCard");
+        txt_productPanel_OrderQuantity.setText("");
     }//GEN-LAST:event_btn_reviewPanel_CancelOrderActionPerformed
 
     private void btn_cartPanel_AddMoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cartPanel_AddMoreActionPerformed
@@ -1875,6 +1876,7 @@ public class POSForm extends javax.swing.JFrame {
         } else {
             btn_productPanel_Checkout.setVisible(false);
         }
+        txt_productPanel_OrderQuantity.setText("");
     }//GEN-LAST:event_btn_cartPanel_AddMoreActionPerformed
 
     private void btn_summaryPanel_MainMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_summaryPanel_MainMenuActionPerformed
@@ -1926,6 +1928,7 @@ public class POSForm extends javax.swing.JFrame {
 
     private void btn_menuPanel_NewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_menuPanel_NewActionPerformed
 
+        trans.started = true;
         trans.complete = false;
         prod.emptyProductList();
         cmbProducts.removeAllItems();
@@ -1970,43 +1973,62 @@ public class POSForm extends javax.swing.JFrame {
         CardLayout card = (CardLayout) inventoryPanel.getLayout();
         if (n == JOptionPane.YES_OPTION) {
             card.show(inventoryPanel, "add");
+            txt_addItemPanel_AvailStock.setText("");
+            txt_addItemPanel_Price.setText("");
+            txt_addItemPanel_ProductName.setText("");
         } else if (n == JOptionPane.NO_OPTION) {
             card.show(inventoryPanel, "existing");
+            txt_addExistingPanel_AddStock.setText("");
         }
     }//GEN-LAST:event_btn_inventoryPanel_AddActionPerformed
 
     private void btn_addItemPanel_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addItemPanel_AddActionPerformed
-
-        String name = txt_addItemPanel_ProductName.getText();
-        boolean existing = false;
         try {
-
             int availStock = Integer.parseInt(txt_addItemPanel_AvailStock.getText());
             double price = Double.parseDouble(txt_addItemPanel_Price.getText());
 
-            for (Products product : prod.productList) {
-                if (name.trim().equalsIgnoreCase(product.getProductName().trim())) {
-                    existing = true;
-                    break;
+            if (availStock > 0 && price >= 0) {
+                if (price == 0) {
+                    int n = JOptionPane.showConfirmDialog(this, "Add this item as a FREE product?", "FREE PRODUCT", JOptionPane.YES_NO_OPTION);
+                    if (n == JOptionPane.YES_OPTION) {
+                        addToInventory(price, availStock);
+                    }
+                } else {
+                    addToInventory(price, availStock);
                 }
-            }
-            if (existing) {
-                JOptionPane.showMessageDialog(this, "Duplicate found! Existing product.");
-            } else {
-                prod.productList.add(new Products(name, price, availStock));
-                fh.updateCSV(prod.productList);
-
-                refreshProductList();
-
-                CardLayout card = (CardLayout) inventoryPanel.getLayout();
-                card.show(inventoryPanel, "view");
+            } else if (availStock < 0 || price < 0) {
+                JOptionPane.showMessageDialog(this, "Invalid input. (Input: one or more fields contain negative value)");
+            } else if (availStock == 0) {
+                JOptionPane.showMessageDialog(this, "Invalid input. (Input: zero value)");
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Invalid input");
+            JOptionPane.showMessageDialog(this, "Invalid input. (Input: not a number)");
         }
-
     }//GEN-LAST:event_btn_addItemPanel_AddActionPerformed
 
+    private void addToInventory(double price, int availStock) {
+        String name = txt_addItemPanel_ProductName.getText();
+        boolean existing = false;
+
+        for (Products product : prod.productList) {
+            if (name.trim().equalsIgnoreCase(product.getProductName().trim())) {
+                existing = true;
+                break;
+            }
+        }
+        if (existing) {
+            JOptionPane.showMessageDialog(this, "Duplicate found! Existing product.");
+        } else {
+            prod.productList.add(new Products(name, price, availStock));
+            fh.writeInventoryLog("Item: " + name + " count: " + availStock + " price: " + price + " per item added to inventory. " + getTimeStamp());
+            fh.updateCSV(prod.productList);
+
+            refreshProductList();
+
+            CardLayout card = (CardLayout) inventoryPanel.getLayout();
+            card.show(inventoryPanel, "view");
+        }
+    }
     private void itmLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmLogoutActionPerformed
         LoginForm login = new LoginForm();
         login.setVisible(true);
@@ -2024,6 +2046,7 @@ public class POSForm extends javax.swing.JFrame {
             String[] options = new String[]{"OK", "Cancel"};
 
             boolean match = false;
+            OUTER:
             while (!match) {
                 int option = JOptionPane.showOptionDialog(null, panel, "Call admin for assistance!",
                         JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
@@ -2053,9 +2076,7 @@ public class POSForm extends javax.swing.JFrame {
                                                 int currAvail = product.getProductAvail();
                                                 int temp = currAvail - diff;
 
-                                                SpinnerModel model = new SpinnerNumberModel(0, 0, 0, 0);
-                                                if (temp > 0) {
-                                                    model = new SpinnerNumberModel(1, 1, temp, 1);
+                                                if (temp >= 0) {
                                                     product.setProductAvail(temp);
                                                     txt_productPanel_Quantity.setText("" + temp);
                                                     txt_reviewPanel_CurrentStock.setText("" + temp);
@@ -2068,19 +2089,20 @@ public class POSForm extends javax.swing.JFrame {
                                         if (sufficient) {
                                             tbl_YourCart.getModel().setValueAt(quantity, tbl_YourCart.getSelectedRow(), 2);
                                             tbl_YourCart.getModel().setValueAt(price * quantity, tbl_YourCart.getSelectedRow(), 3);
-                                            fh.writeAuditTrail("The item: " + name + "count: " + quantity + " edited from: " + currentQuantity + " " + getTimeStamp());
+                                            fh.writeAuditTrail("The item: " + name + " count: " + quantity + " edited from: " + currentQuantity + " in cart. " + getTimeStamp());
                                             accepted = true;
                                         }
+                                    } else if (quantity == 0) {
+                                        JOptionPane.showMessageDialog(this, "Invalid input. (Input: cannot be zero)");
                                     } else {
-                                        JOptionPane.showMessageDialog(this, "Invalid input.");
+                                        JOptionPane.showMessageDialog(this, "Invalid input. (Input: negative value)");
                                     }
                                 } catch (NumberFormatException ex) {
-                                    JOptionPane.showMessageDialog(this, "Enter a number.");
-                                } catch (ArrayIndexOutOfBoundsException ex) {
-                                    JOptionPane.showMessageDialog(this, "No selected item.");
+                                    JOptionPane.showMessageDialog(this, "Invalid input. (Input: not a number.)");
                                 }
-
                                 match = true;
+                            } else if (answer == null) {
+                                break OUTER;
                             } else {
                                 JOptionPane.showMessageDialog(this, "No input!");
                             }
@@ -2103,63 +2125,85 @@ public class POSForm extends javax.swing.JFrame {
             if ((answer != null) && (answer.length() > 0)) {
                 try {
                     double price = Double.parseDouble(answer);
-                    String name = (String) tbl_Inventory.getModel().getValueAt(tbl_Inventory.getSelectedRow(), 0);
-                    for (Products product : prod.productList) {
-                        if (product.getProductName().equals(name)) {
-                            product.setProductPrice(price);
+
+                    if (price >= 0) {
+                        String name = (String) tbl_Inventory.getModel().getValueAt(tbl_Inventory.getSelectedRow(), 0);
+                        if (price == 0) {
+                            int n = JOptionPane.showConfirmDialog(this, "Product will be FREE. Continue?", "FREE PRODUCT PROMO", JOptionPane.YES_NO_OPTION);
+                            if (n == JOptionPane.YES_OPTION) {
+                                updatePrice(name, price);
+                            }
+                        } else {
+                            updatePrice(name, price);
                         }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Invalid input. (Input: negative value)");
                     }
-                    fh.updateCSV(prod.productList);
-                    prod.emptyProductList();
-                    refreshProductList();
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(this, "Enter a number.");
-                } catch (ArrayIndexOutOfBoundsException ex) {
+                    JOptionPane.showMessageDialog(this, "Invalid input. (Input: not a number)");
+                } catch (ArrayIndexOutOfBoundsException e) {
                     JOptionPane.showMessageDialog(this, "No selected item.");
                 }
             }
         } else {
             JOptionPane.showMessageDialog(this, "No item selected.");
         }
-
-
     }//GEN-LAST:event_btn_inventoryPanel_UpdateActionPerformed
 
+    private void updatePrice(String name, double price) {
+        double previousPrice = 0;
+        for (Products product : prod.productList) {
+            if (product.getProductName().equals(name)) {
+                previousPrice = product.getProductPrice();
+                product.setProductPrice(price);
+            }
+        }
+        fh.writeInventoryLog("Item: " + name + " updated price from: " + previousPrice + " to: " + price + ". " + getTimeStamp());
+        fh.updateCSV(prod.productList);
+        prod.emptyProductList();
+        refreshProductList();
+    }
     private void btn_addExistingPanel_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addExistingPanel_AddActionPerformed
-        String name = cmbExistingProduct.getSelectedItem().toString();
         try {
-
-            double price = Double.parseDouble(txt_addExistingPanel_Price.getText().substring(1, txt_addExistingPanel_Price.getText().length()));
-
             int toAdd = (Integer.parseInt(txt_addExistingPanel_AddStock.getText()));
 
-            String id = null;
-            int listedQuantity = 0;
-            int i = 0;
-            for (i = 0; i < prod.productList.size(); i++) {
-                id = prod.productList.get(i).getProductName();
-                if (name.equals(id)) {
-                    listedQuantity = (Integer) prod.productList.get(i).getProductAvail();
-                    break;
+            if (toAdd > 0) {
+                String name = cmbExistingProducts.getSelectedItem().toString();
+
+                double price = Double.parseDouble(txt_addExistingPanel_Price.getText().substring(1, txt_addExistingPanel_Price.getText().length()));
+
+                String id = null;
+                int listedQuantity = 0;
+                int i = 0;
+                for (i = 0; i < prod.productList.size(); i++) {
+                    id = prod.productList.get(i).getProductName();
+                    if (name.equals(id)) {
+                        listedQuantity = (Integer) prod.productList.get(i).getProductAvail();
+                        break;
+                    }
                 }
-            }
 
-            if (name.equals(id)) {
-                int totalQuantity = toAdd + listedQuantity;
-                prod.productList.get(i).setProductAvail(totalQuantity);
+                if (name.equals(id)) {
+                    int totalQuantity = toAdd + listedQuantity;
+                    prod.productList.get(i).setProductAvail(totalQuantity);
+                    fh.writeInventoryLog("Item: " + name + " count: " + toAdd + " added to existing: " + listedQuantity + " available stocks. Total: " + totalQuantity + " " + getTimeStamp());
+                } else {
+                    prod.productList.add(new Products(name, price, toAdd));
+                    fh.writeInventoryLog("Item: " + name + " count: " + toAdd + " price: " + price + " per item added to inventory. " + getTimeStamp());
+                }
+
+                fh.updateCSV(prod.productList);
+                refreshProductList();
+
+                CardLayout card = (CardLayout) inventoryPanel.getLayout();
+                card.show(inventoryPanel, "view");
+            } else if (toAdd < 0) {
+                JOptionPane.showMessageDialog(this, "Invalid input. (Input: negative value)");
             } else {
-                prod.productList.add(new Products(name, price, toAdd));
+                JOptionPane.showMessageDialog(this, "Invalid input. (Input: zero value)");
             }
-
-            fh.updateCSV(prod.productList);
-
-            refreshProductList();
-
-            CardLayout card = (CardLayout) inventoryPanel.getLayout();
-            card.show(inventoryPanel, "view");
-
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Invalid input");
+            JOptionPane.showMessageDialog(this, "Invalid input. (Input: not a number)");
         }
     }//GEN-LAST:event_btn_addExistingPanel_AddActionPerformed
 
@@ -2168,20 +2212,20 @@ public class POSForm extends javax.swing.JFrame {
         card.show(inventoryPanel, "view");
     }//GEN-LAST:event_btn_addExistingPanel_CancelActionPerformed
 
-    private void cmbExistingProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbExistingProductActionPerformed
-        for (int i = 0; i < prod.productList.size(); i++) {
-            if (cmbExistingProduct.getSelectedItem() == prod.productList.get(i).getProductName()) {
-                txt_addExistingPanel_Price.setText("P" + prod.productList.get(i).getProductPrice());
-                int avail = prod.productList.get(i).getProductAvail();
-                txt_addExistingPanel_AvailStock.setText("" + avail);
-            }
-        }
-    }//GEN-LAST:event_cmbExistingProductActionPerformed
-
     private void btn_productPanel_CheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_productPanel_CheckoutActionPerformed
         CardLayout card = (CardLayout) transactionPanel.getLayout();
         card.show(transactionPanel, "cartCard");
     }//GEN-LAST:event_btn_productPanel_CheckoutActionPerformed
+
+    private void cmbExistingProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbExistingProductsActionPerformed
+        for (Products product : prod.productList) {
+            if (cmbExistingProducts.getSelectedItem().toString().trim().toLowerCase().equals(product.getProductName().trim().toLowerCase())) {
+                txt_addExistingPanel_AvailStock.setText("" + product.getProductAvail());
+                txt_addExistingPanel_Price.setText("P" + product.getProductPrice());
+                break;
+            }
+        }
+    }//GEN-LAST:event_cmbExistingProductsActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -2220,7 +2264,7 @@ public class POSForm extends javax.swing.JFrame {
     private javax.swing.JButton btn_reviewPanel_ResumeShopping;
     private javax.swing.JButton btn_summaryPanel_MainMenu;
     private javax.swing.JPanel cartPanel;
-    private javax.swing.JComboBox cmbExistingProduct;
+    private javax.swing.JComboBox<String> cmbExistingProducts;
     private javax.swing.JComboBox<String> cmbProducts;
     private javax.swing.JPanel detailsPanel;
     private javax.swing.JPanel inventoryPanel;
