@@ -20,8 +20,8 @@ public class FileHandling {
 
     private static final String PRODUCTS_PATH_LOCATION = "./resources/database/Products.csv";
     private static final String PRODUCTS_BACKUP_PATH_LOCATION = "./backup/Products.csv";
-    private static final String AUDIT_TRAIL_PATH_LOCATION = "./auditlog.txt";
-    private static final String AUDIT_TRAIL_BACKUP_PATH_LOCATION = "./backup/auditlog.txt";
+    private static final String AUDIT_TRAIL_PATH_LOCATION = "./audit_trail.txt";
+    private static final String AUDIT_TRAIL_BACKUP_PATH_LOCATION = "./backup/audit_trail.txt";
 
     //CSV file header
     private static final String FILE_HEADER = "Name,Price,Available";
@@ -135,7 +135,7 @@ public class FileHandling {
     }
 
     public void writeAuditTrail(String line) {
-        File file = new File("./auditlog.txt");
+        File file = new File("./audit_trail.txt");
         for (int i = 0; i < 2; i++) {
 
             file.getParentFile().mkdirs();
@@ -150,7 +150,7 @@ public class FileHandling {
                 Logger.getLogger(FileHandling.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            file = new File("./backup/auditlog.txt");
+            file = new File("./backup/audit_trail.txt");
         }
     }
 
@@ -180,7 +180,7 @@ public class FileHandling {
     }
 
     public void writeInventoryLog(String line) {
-        File file = new File("./inventorylog.txt");
+        File file = new File("./inventory_log.txt");
         for (int i = 0; i < 2; i++) {
 
             file.getParentFile().mkdirs();
@@ -195,7 +195,7 @@ public class FileHandling {
                 Logger.getLogger(FileHandling.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            file = new File("./backup/inventorylog.txt");
+            file = new File("./backup/inventory_log.txt");
         }
     }
 }
