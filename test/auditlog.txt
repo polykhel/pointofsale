@@ -1,0 +1,46 @@
+The item: Pencil count: 1 selected and reviewed. 20160706132433
+The item: Pencil count: 1 added to list. 20160706132436
+The item: Intermediate Pad count: 50 selected and reviewed. 20160706132444
+The item: Intermediate Pad count: 50 added to list. 20160706132446
+Items Finalized Transaction #0001. 20160706132605
+Items total amount: 1691.20 20160706132605
+Amount paid: 2000.00 20160706132605
+Change: 308.80 20160706132605
+End Transaction #0001. 20160706132605
+
+The item: Ballpen count: 2 selected and reviewed. 20160706132620
+The item: Ballpen count: 2 added to list. 20160706132623
+The item: ID Lace count: 4 selected and reviewed. 20160706132639
+The item: ID Lace count: 4 added to list. 20160706132641
+The item: ID Lace count: 1 selected and reviewed. 20160706132647
+The item: ID Lace count: 1 added to list. 20160706132649
+The item: Ballpen count: 2 removed from list. 20160706132700
+Items Finalized Transaction #0002. 20160706132703
+Items total amount: 30.80 20160706132703
+Amount paid: 50.00 20160706132703
+Change: 19.20 20160706132703
+End Transaction #0002. 20160706132703
+
+The item: Ballpen count: 3 selected and reviewed. 20160706132713
+The item: Ballpen count: 3 added to list. 20160706132715
+Items Finalized Transaction #0003. 20160706132722
+Items total amount: 67.20 20160706132722
+Amount paid: 100.00 20160706132722
+Change: 32.80 20160706132722
+End Transaction #0003. 20160706132722
+
+User cancelled transaction. 0004. 20160706132753
+End Transaction #0004. 20160706132753
+
+User cancelled transaction. #0005. 20160706135825
+End Transaction #0005. 20160706135825
+
+User cancelled transaction. #0006. 20160706144855
+End Transaction #0006. 20160706144855
+
+User cancelled transaction. #0007. 20160706145817
+End Transaction #0007. 20160706145817
+
+User cancelled transaction. #0008. 2016070615245
+End Transaction #0008. 2016070615245
+
