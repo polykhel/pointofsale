@@ -1,0 +1,11 @@
+Item: Speaker count: 3 price: 500.0 added to inventory.20160709172337
+Item: Ballpen count: 3 added to existing 2 available stocks. Total now: 5 20160709172504
+Item: Ballpen count: 2 removed and sold. 20160709172708
+Item: Ballpen count: 5 added to existing: 3 available stocks. Total: 8 20160709174802
+Item: Speaker updated price from: 500.0 to: 459.0. 20160709174831
+Item: Paper clip count: 2 removed and sold. 20160709174908
+Item: Eraser count: 3 removed and sold. 20160709175237
+Item: Pencil count: 1 removed and sold. 20160709175237
+Item: ID Lace count: 1 removed and sold. 20160709175350
+Item: Tape count: 2 removed and sold. 20160709175350
+Item: Ballpen count: 8 removed and sold. 20160709181513

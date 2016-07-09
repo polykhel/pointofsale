@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import model.Products;
 
 public class FileHandling {
@@ -166,12 +167,35 @@ public class FileHandling {
             } catch (FileNotFoundException e) {
                 File file2 = new File(AUDIT_TRAIL_BACKUP_PATH_LOCATION);
                 try {
+                    if (!file2.exists()) {
+                        file2.createNewFile();
+                    }
                     Files.copy(file2.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException ex) {
-                    System.err.println("Problem in reading file");
+                    JOptionPane.showMessageDialog(null, "Problem in from the reading file.");
                 }
             }
         }
         return output;
+    }
+
+    public void writeInventoryLog(String line) {
+        File file = new File("./inventorylog.txt");
+        for (int i = 0; i < 2; i++) {
+
+            file.getParentFile().mkdirs();
+
+            try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file.getAbsoluteFile(), true)))) {        //the true is the append flag
+
+                writer.println(line);
+
+            } catch (FileNotFoundException e) {
+                System.err.println("File cannot be opened for writing.");
+            } catch (IOException ex) {
+                Logger.getLogger(FileHandling.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            file = new File("./backup/inventorylog.txt");
+        }
     }
 }

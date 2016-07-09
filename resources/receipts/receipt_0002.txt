@@ -1,0 +1,17 @@
+                       PAZADONG PAZADO 
+                        Antipolo City 
+
+Transaction No: #002
+
+Item Desc                      Price                     Total Price
+Paper clip                     0.50               x  2   1.00
+
+Item count:                    1
+
+SUBTOTAL:                                                  1.00
+VAT:                                                       0.12
+TOTAL:                                                     1.12
+
+
+Paid Amount:                                               2.50
+Change                                                     1.38

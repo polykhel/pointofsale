@@ -1,0 +1,18 @@
+                       PAZADONG PAZADO 
+                        Antipolo City 
+
+Transaction No: #004
+
+Item Desc                      Price                     Total Price
+ID Lace                        5.50               x  1   5.50
+Tape                           40.00              x  2   80.00
+
+Item count:                    2
+
+SUBTOTAL:                                                 85.50
+VAT:                                                      10.26
+TOTAL:                                                    95.76
+
+
+Paid Amount:                                             100.00
+Change                                                     4.24

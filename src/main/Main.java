@@ -14,9 +14,13 @@ public class Main {
 
 
     public static void main(String[] args) {
-        view.LoginForm log = new view.LoginForm();
+        /*view.LoginForm log = new view.LoginForm();
         log.setLocationRelativeTo(null);
         log.setVisible(true);
+        */
+        
+        view.POSForm pos = new view.POSForm("admin");
+        pos.setVisible(true);
     }
     
 /***                                                                            

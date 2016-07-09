@@ -13,6 +13,7 @@ public class Transaction {
     private double amountPaid;
     private double change;
     public int transNumber;
+    public boolean started;
     public boolean complete;
 
     public Transaction() {
