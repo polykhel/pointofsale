@@ -1756,45 +1756,49 @@ public class POSForm extends javax.swing.JFrame {
 
         tbl_YourCart.setModel(orderData);
 
-        if (Integer.parseInt(txt_productPanel_Quantity.getText()) > 0) {
-            String pName = txt_reviewPanel_Name.getText();
-            double price = Double.parseDouble(txt_reviewPanel_Price.getText().substring(1, txt_productPanel_Price.getText().length()));
-            int quantity = 0;
-            try {
-                quantity = Integer.parseInt(txt_reviewPanel_OrderQuantity.getText());
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Invalid input! Not a number.");
-            }
-            double totalPrice = price * quantity;
-            Object data[] = {pName, price, quantity, totalPrice};
+        int currStock = 0;
+        int quantity = 0;
+        try {
+            currStock = Integer.parseInt(txt_reviewPanel_CurrentStock.getText());
+            quantity = Integer.parseInt(txt_reviewPanel_OrderQuantity.getText());
 
-            String id = null;
-            int listedQuantity = 0;
-            int i = 0;
-            if (!isEmpty(tbl_YourCart)) {
-                for (i = 0; i < tbl_YourCart.getRowCount(); i++) {
-                    id = tbl_YourCart.getValueAt(i, 0).toString();
-                    if (pName.equals(id)) {
-                        listedQuantity = (Integer) tbl_YourCart.getValueAt(i, 2);
-                        break;
+            if (currStock > 0 && currStock >= quantity) {
+                String pName = txt_reviewPanel_Name.getText();
+                double price = Double.parseDouble(txt_reviewPanel_Price.getText().substring(1, txt_productPanel_Price.getText().length()));
+
+                double totalPrice = price * quantity;
+                Object data[] = {pName, price, quantity, totalPrice};
+
+                String id = null;
+                int listedQuantity = 0;
+                int i = 0;
+                if (!isEmpty(tbl_YourCart)) {
+                    for (i = 0; i < tbl_YourCart.getRowCount(); i++) {
+                        id = tbl_YourCart.getValueAt(i, 0).toString();
+                        if (pName.equals(id)) {
+                            listedQuantity = (Integer) tbl_YourCart.getValueAt(i, 2);
+                            break;
+                        }
                     }
                 }
-            }
 
-            if (pName.equals(id)) {
-                int totalQuantity = quantity + listedQuantity;
-                totalPrice = totalQuantity * price;
-                orderData.setValueAt(totalQuantity, i, 2);
-                orderData.setValueAt(totalPrice, i, 3);
+                if (pName.equals(id)) {
+                    int totalQuantity = quantity + listedQuantity;
+                    totalPrice = totalQuantity * price;
+                    orderData.setValueAt(totalQuantity, i, 2);
+                    orderData.setValueAt(totalPrice, i, 3);
+                } else {
+                    orderData.addRow(data);
+                }
+
+                updateProductAvail(pName, quantity);        //updates the current available stock based on current orders
+
+                fh.writeAuditTrail("The item: " + pName + " count: " + quantity + " added to list. " + getTimeStamp());
             } else {
-                orderData.addRow(data);
+                JOptionPane.showMessageDialog(this, "Item out of stock.");
             }
-
-            updateProductAvail(pName, quantity);        //updates the current available stock based on current orders
-
-            fh.writeAuditTrail("The item: " + pName + " count: " + quantity + " added to list. " + getTimeStamp());
-        } else {
-            JOptionPane.showMessageDialog(this, "Item out of stock.");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid input. (Input: not a number)");
         }
     }
 
@@ -1921,6 +1925,11 @@ public class POSForm extends javax.swing.JFrame {
     private void btn_menuPanel_ViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_menuPanel_ViewActionPerformed
         CardLayout card = (CardLayout) mainMenu.getLayout();
         card.show(mainMenu, "invCard");
+
+        prod.emptyProductList();
+        cmbExistingProducts.removeAllItems();
+        cmbProducts.removeAllItems();
+        refreshProductList();
     }//GEN-LAST:event_btn_menuPanel_ViewActionPerformed
 
     private void btn_menuPanel_NewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_menuPanel_NewActionPerformed
@@ -2196,7 +2205,7 @@ public class POSForm extends javax.swing.JFrame {
 
                 CardLayout card = (CardLayout) inventoryPanel.getLayout();
                 card.show(inventoryPanel, "view");
-                
+
                 prod.emptyProductList();
                 cmbExistingProducts.removeAllItems();
                 refreshProductList();
