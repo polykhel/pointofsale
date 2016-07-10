@@ -14,10 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JSpinner;
 import javax.swing.JTable;
-import javax.swing.SpinnerModel;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
@@ -2023,6 +2020,8 @@ public class POSForm extends javax.swing.JFrame {
             fh.writeInventoryLog("Item: " + name + " count: " + availStock + " price: " + price + " per item added to inventory. " + getTimeStamp());
             fh.updateCSV(prod.productList);
 
+            prod.emptyProductList();
+            cmbExistingProducts.removeAllItems();
             refreshProductList();
 
             CardLayout card = (CardLayout) inventoryPanel.getLayout();
@@ -2161,6 +2160,7 @@ public class POSForm extends javax.swing.JFrame {
         fh.writeInventoryLog("Item: " + name + " updated price from: " + previousPrice + " to: " + price + ". " + getTimeStamp());
         fh.updateCSV(prod.productList);
         prod.emptyProductList();
+        cmbExistingProducts.removeAllItems();
         refreshProductList();
     }
     private void btn_addExistingPanel_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addExistingPanel_AddActionPerformed
@@ -2193,10 +2193,13 @@ public class POSForm extends javax.swing.JFrame {
                 }
 
                 fh.updateCSV(prod.productList);
-                refreshProductList();
 
                 CardLayout card = (CardLayout) inventoryPanel.getLayout();
                 card.show(inventoryPanel, "view");
+                
+                prod.emptyProductList();
+                cmbExistingProducts.removeAllItems();
+                refreshProductList();
             } else if (toAdd < 0) {
                 JOptionPane.showMessageDialog(this, "Invalid input. (Input: negative value)");
             } else {

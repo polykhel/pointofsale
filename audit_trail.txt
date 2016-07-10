@@ -101,3 +101,9 @@ End Transaction #0013. 20160709182808
 User cancelled transaction. #0014. 20160709185158
 End Transaction #0014. 20160709185158
 
+The item: Notebook count: 1 selected and reviewed. 20160709224956
+The item: Notebook count: 1 added to list. 20160709224957
+The item: Notebook count: 2 edited from: 1 in cart. 20160709225132
+User cancelled transaction. #0015. 20160709225253
+End Transaction #0015. 20160709225253
+

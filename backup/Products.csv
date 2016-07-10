@@ -1,18 +1,20 @@
 Name,Price,Available
-Ballpen,11.0,6
-Pencil,10.0,17
-Pad paper,30.0,49
+Ballpen,9.0,12
+Pencil,10.0,23
+Pad paper,30.0,50
 ID Lace,5.5,18
 Eraser,5.0,21
 Paper clip,0.5,98
 Highlighter,10.0,58
-Tape,40.0,30
+Tape,40.0,32
 Glue,3.0,80
 Stapler,100.0,18
 Charger,999.0,4
-Notebook,13.0,500
+Notebook,12.0,500
 Correction Fluid,10.0,5
 Graphing paper,5.0,225
-Cup,129.0,1
+Cup,100.0,1
 Speaker,459.0,3
-Laptop,20000.0,10
+Laptop,9999.0,10
+Alarm clock,60.0,5
+alarm    clock,22.0,232

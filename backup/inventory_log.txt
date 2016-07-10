@@ -12,3 +12,19 @@ Item: Ballpen count: 8 removed and sold. 20160709181513
 Item: Cup updated price from: 125.0 to: 129.0. 20160709183702
 Item: Laptop count: 5 price: 20000.0 per item added to inventory. 20160709183820
 Item: Laptop count: 5 added to existing: 5 available stocks. Total: 10 20160709183842
+Item: Cup updated price from: 129.0 to: 2.1. 20160709223752
+Item: Cup updated price from: 2.1 to: 129.0. 20160709223756
+Item: Pencil count: 3 added to existing: 17 available stocks. Total: 20 20160709224332
+Item: Pencil count: 3 added to existing: 20 available stocks. Total: 23 20160709224413
+Item: Ballpen count: 4 added to existing: 6 available stocks. Total: 10 20160709224737
+Item: Laptop updated price from: 20000.0 to: 10000.0. 20160709225306
+Item: Laptop updated price from: 10000.0 to: 9999.0. 20160709225346
+Item: Cup updated price from: 129.0 to: 100.0. 20160709225510
+Item: Tape count: 2 added to existing: 30 available stocks. Total: 32 20160709225521
+Item: Pad paper count: 1 added to existing: 49 available stocks. Total: 50 20160709225750
+Item: Ballpen count: 2 added to existing: 10 available stocks. Total: 12 20160709225854
+Item: Ballpen updated price from: 11.0 to: 9.0. 20160709225902
+Item: Alarm clock count: 5 price: 60.0 per item added to inventory. 2016070923143
+Item: alarmclock count: 2 price: 3.0 per item added to inventory. 2016070923152
+Item: alarm    clock count: 232 price: 22.0 per item added to inventory. 2016070923340
+Item: Notebook updated price from: 13.0 to: 12.0. 2016070923402
