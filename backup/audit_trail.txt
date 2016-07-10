@@ -188,3 +188,68 @@ The item: Notebook count: 2 edited from: 1 in cart. 20160709225132
 User cancelled transaction. #0015. 20160709225253
 End Transaction #0015. 20160709225253
 
+The item: Ballpen count: 1 selected and reviewed. 20160710133916
+The item: Ballpen count: 1 added to list. 20160710133918
+The item: Ballpen count: 1 removed from list. 20160710134118
+The item: Tape count: 7 selected and reviewed. 20160710135315
+The item: Tape count: 7 added to list. 20160710135321
+The item: Tape count: 7 added to list. 20160710135336
+The item: Tape count: 7 added to list. 20160710135337
+The item: Tape count: 7 added to list. 20160710135337
+The item: Tape count: 7 added to list. 20160710135338
+The item: Pencil count: 3 selected and reviewed. 20160710135609
+User cancelled transaction. #0016. 2016071014323
+End Transaction #0016. 2016071014323
+
+The item: Ballpen count: 2 selected and reviewed. 2016071014408
+The item: Ballpen count: 2 added to list. 2016071014410
+The item: Ballpen count: 2 added to list. 2016071014410
+The item: Ballpen count: 2 added to list. 2016071014410
+The item: Ballpen count: 2 added to list. 2016071014411
+The item: Ballpen count: 2 added to list. 2016071014411
+User cancelled transaction. #0017. 2016071014435
+End Transaction #0017. 2016071014435
+
+The item: Ballpen count: 2 selected and reviewed. 2016071014454
+The item: Ballpen count: 2 added to list. 2016071014455
+The item: Ballpen count: 2 added to list. 2016071014455
+The item: Ballpen count: 2 added to list. 2016071014455
+The item: Ballpen count: 2 added to list. 2016071014456
+The item: Ballpen count: 2 added to list. 2016071014456
+The item: Ballpen count: 2 added to list. 2016071014456
+The item: Ballpen count: 12 removed from list. 2016071014517
+The item: Ballpen count: 3 selected and reviewed. 2016071014527
+The item: Ballpen count: 3 added to list. 2016071014528
+The item: Ballpen count: 3 added to list. 2016071014528
+The item: Ballpen count: 3 added to list. 2016071014529
+The item: Ballpen count: 3 added to list. 2016071014530
+The item: Ballpen count: 12 removed from list. 2016071014534
+The item: Pencil count: 7 selected and reviewed. 2016071014542
+The item: Pencil count: 7 added to list. 2016071014544
+The item: Pencil count: 7 added to list. 2016071014545
+The item: Pencil count: 7 added to list. 2016071014546
+User cancelled transaction. #0018. 2016071014621
+End Transaction #0018. 2016071014621
+
+The item: Ballpen count: 2 selected and reviewed. 2016071014632
+The item: Ballpen count: 2 added to list. 2016071014634
+Items Finalized Transaction #0019. 2016071014640
+Items total amount: 20.16 2016071014640
+Amount paid: 25.25 2016071014640
+Change: 5.09 2016071014640
+End Transaction #0019. 2016071014640
+
+The item: Eraser count: 2 selected and reviewed. 20160710141032
+The item: Eraser count: 2 added to list. 20160710141033
+The item: Tape count: 1 selected and reviewed. 20160710141041
+The item: Tape count: 1 added to list. 20160710141042
+The item: Laptop count: 2 selected and reviewed. 20160710141050
+The item: Highlighter count: 3 selected and reviewed. 20160710141059
+The item: Highlighter count: 3 added to list. 20160710141100
+The item: Highlighter count: 1 edited from: 3 in cart. 20160710141113
+Items Finalized Transaction #0020. 20160710141115
+Items total amount: 67.20 20160710141115
+Amount paid: 100.00 20160710141115
+Change: 32.80 20160710141115
+End Transaction #0020. 20160710141115
+

@@ -2,7 +2,6 @@ package controller;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -80,14 +79,12 @@ public class FileHandling {
     }
 
     public void writeReceipt(Transaction trans, double paidAmount, double change) {
-
         File file = new File(String.format("./resources/receipts/receipt_%04d%s", trans.transNumber, ".txt"));
+        
         for (int i = 0; i < 2; i++) {
-
             file.getParentFile().mkdirs();
 
             try (PrintWriter writer = new PrintWriter(file.getAbsoluteFile())) {
-
                 writer.printf("%38s %n", "PAZADONG PAZADO");
                 writer.printf("%37s %n%n", "Antipolo City");
                 writer.println("Transaction No: #00" + trans.transNumber);
@@ -105,33 +102,9 @@ public class FileHandling {
             } catch (FileNotFoundException e) {
                 System.err.println("File cannot be opened for writing.");
             }
-
+            
             file = new File(String.format("./backup/receipt_%04d%s", trans.transNumber, ".txt"));
-
         }
-    }
-
-    public String readReceipt(Transaction trans) {
-        int temp;
-        char data;
-        String output = "";
-        try {
-            FileInputStream fis = new FileInputStream(String.format("./resources/receipts/receipt_%04d%s", trans.transNumber, ".txt"));
-            try {
-                do {
-                    temp = fis.read();
-                    data = (char) temp;
-                    if (temp != -1) {
-                        output += data;
-                    }
-                } while (temp != -1);
-            } catch (IOException e) {
-                System.out.println("Problem in reading from the file.");
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("Problem in reading from the file.");
-        }
-        return output;
     }
 
     public void writeAuditTrail(String line) {
@@ -156,17 +129,24 @@ public class FileHandling {
 
     public String readAuditTrail() {
         File file = new File(AUDIT_TRAIL_PATH_LOCATION);
+        
         String output = "";
         boolean fileFound = false;
+        
         while (!fileFound) {
             try (Scanner scanner = new Scanner(file)) {
+                
                 while (scanner.hasNextLine()) {
                     output += scanner.nextLine() + " ";
                 }
+                
                 fileFound = true;
+                
             } catch (FileNotFoundException e) {
+                
                 File file2 = new File(AUDIT_TRAIL_BACKUP_PATH_LOCATION);
                 try {
+                    
                     if (!file2.exists()) {
                         file2.createNewFile();
                     }
@@ -174,6 +154,7 @@ public class FileHandling {
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(null, "Problem in from the reading file.");
                 }
+                
             }
         }
         return output;
@@ -181,6 +162,7 @@ public class FileHandling {
 
     public void writeInventoryLog(String line) {
         File file = new File("./inventory_log.txt");
+        
         for (int i = 0; i < 2; i++) {
 
             file.getParentFile().mkdirs();

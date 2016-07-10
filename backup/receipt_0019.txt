@@ -1,0 +1,17 @@
+                       PAZADONG PAZADO 
+                        Antipolo City 
+
+Transaction No: #0019
+
+Item Desc                      Price                     Total Price
+Ballpen                        9.00               x  2   18.00
+
+Item count:                    1
+
+SUBTOTAL:                                                 18.00
+VAT:                                                       2.16
+TOTAL:                                                    20.16
+
+
+Paid Amount:                                              25.25
+Change                                                     5.09

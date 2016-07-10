@@ -1,0 +1,19 @@
+                       PAZADONG PAZADO 
+                        Antipolo City 
+
+Transaction No: #0020
+
+Item Desc                      Price                     Total Price
+Eraser                         5.00               x  2   10.00
+Tape                           40.00              x  1   40.00
+Highlighter                    10.00              x  1   10.00
+
+Item count:                    3
+
+SUBTOTAL:                                                 60.00
+VAT:                                                       7.20
+TOTAL:                                                    67.20
+
+
+Paid Amount:                                             100.00
+Change                                                    32.80

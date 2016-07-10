@@ -28,3 +28,8 @@ Item: Alarm clock count: 5 price: 60.0 per item added to inventory. 201607092314
 Item: alarmclock count: 2 price: 3.0 per item added to inventory. 2016070923152
 Item: alarm    clock count: 232 price: 22.0 per item added to inventory. 2016070923340
 Item: Notebook updated price from: 13.0 to: 12.0. 2016070923402
+Item: Ballpen count: 2 removed and sold. 2016071014640
+Item: Eraser count: 2 removed and sold. 20160710141115
+Item: Tape count: 1 removed and sold. 20160710141115
+Item: Highlighter count: 1 removed and sold. 20160710141115
+Item: Cup updated price from: 100.0 to: 99.0. 20160710141216
