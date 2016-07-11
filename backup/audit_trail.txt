@@ -253,3 +253,96 @@ Amount paid: 100.00 20160710141115
 Change: 32.80 20160710141115
 End Transaction #0020. 20160710141115
 
+The item: Pad paper count: 2 selected and reviewed. 20160711071821
+The item: Pad paper count: 2 added to list. 20160711071823
+The item: Ballpen count: 1 selected and reviewed. 20160711071829
+The item: Ballpen count: 1 added to list. 20160711071830
+The item: Ballpen count: 2 edited from: 1 in cart. 20160711071845
+The item: Ballpen count: 1 edited from: 2 in cart. 20160711071853
+The item: Ballpen count: 1 selected and reviewed. 20160711073455
+User cancelled transaction. #0021. 20160711074531
+End Transaction #0021. 20160711074531
+
+The item: Ballpen count: 2 selected and reviewed. 20160711074609
+The item: Ballpen count: 2 added to list. 20160711074612
+The item: Ballpen count: 2 removed from list. 20160711074620
+The item: Ballpen count: 1 selected and reviewed. 20160711074639
+The item: Ballpen count: 1 added to list. 20160711074640
+The item: Paper clip count: 1 selected and reviewed. 20160711074645
+The item: Paper clip count: 1 added to list. 20160711074647
+The item: Ballpen count: 1 removed from list. 20160711074656
+The item: Paper clip count: 1 removed from list. 20160711074701
+User cancelled transaction. #0022. 20160711074839
+End Transaction #0022. 20160711074839
+
+The item: Ballpen count: 2 selected and reviewed. 20160711074850
+The item: Ballpen count: 2 added to list. 20160711074852
+The item: Ballpen count: 2 removed from list. 20160711074915
+User cancelled transaction. #0023. 20160711075237
+End Transaction #0023. 20160711075237
+
+User cancelled transaction. #0024. 20160711075501
+End Transaction #0024. 20160711075501
+
+The item: Ballpen count: 1 selected and reviewed. 20160711075522
+The item: Ballpen count: 1 selected and reviewed. 20160711075603
+User cancelled transaction. #0025. 20160711075703
+End Transaction #0025. 20160711075703
+
+The item: Ballpen count: 2 selected and reviewed. 20160711075712
+User cancelled transaction. #0026. 2016071108105
+End Transaction #0026. 2016071108105
+
+The item: Ballpen count: 1 selected and reviewed. 2016071108114
+The item: Ballpen count: 1 added to list. 2016071108115
+The item: Ballpen count: 1 removed from list. 2016071108122
+The item: Ballpen count: 1 selected and reviewed. 2016071108130
+The item: Ballpen count: 1 added to list. 2016071108143
+User cancelled transaction. #0027. 20160711082957
+End Transaction #0027. 20160711082957
+
+User cancelled transaction. #0028. 20160711083129
+End Transaction #0028. 20160711083129
+
+User cancelled transaction. #0029. 20160711083240
+End Transaction #0029. 20160711083240
+
+User cancelled transaction. #0030. 20160711083309
+End Transaction #0030. 20160711083309
+
+The item: Ballpen count: 2 selected and reviewed. 20160711083932
+The item: Highlighter count: 2 selected and reviewed. 20160711084101
+The item: Highlighter count: 2 added to list. 20160711084102
+The item: Highlighter count: 2 added to list. 20160711091248
+The item: Highlighter count: 2 added to list. 20160711091249
+The item: Highlighter count: 2 added to list. 20160711091250
+The item: Highlighter count: 2 added to list. 20160711091250
+The item: Highlighter count: 2 added to list. 20160711091250
+The item: Highlighter count: 2 added to list. 20160711091250
+The item: Highlighter count: 2 added to list. 20160711091250
+The item: Highlighter count: 2 added to list. 20160711091251
+The item: Highlighter count: 2 added to list. 20160711091251
+The item: Highlighter count: 2 added to list. 20160711091251
+The item: Highlighter count: 2 added to list. 20160711091251
+The item: Highlighter count: 2 added to list. 20160711091252
+User cancelled transaction. #0031. 20160711091320
+End Transaction #0031. 20160711091320
+
+The item: Highlighter count: 1 selected and reviewed. 20160711091328
+The item: Highlighter count: 1 added to list. 20160711091329
+The item: Highlighter count: 1 removed from list. 20160711091338
+The item: Highlighter count: 1 selected and reviewed. 20160711091342
+The item: Highlighter count: 1 added to list. 20160711091343
+The item: Highlighter count: 57 edited from: 1 in cart. 20160711091355
+The item: Highlighter count: 1 edited from: 57 in cart. 20160711091430
+Items Finalized Transaction #0032. 20160711092233
+Items total amount: 11.20 20160711092233
+Amount paid: 20.00 20160711092233
+Change: 8.80 20160711092233
+End Transaction #0032. 20160711092233
+
+The item: Ballpen count: 1 selected and reviewed. 20160711093247
+The item: Ballpen count: 1 added to list. 20160711093247
+User cancelled transaction. #0033. 20160711093831
+End Transaction #0033. 20160711093831
+
