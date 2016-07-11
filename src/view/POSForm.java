@@ -33,15 +33,21 @@ public class POSForm extends javax.swing.JFrame {
         super("PAZADO");
         initComponents();                   //netbeans generated components
         myInitComponents();                 //my own components, manual
-        if ("admin".equals(accessType)) {
-            btn_inventoryPanel_Add.setVisible(true);
-            btn_inventoryPanel_Update.setVisible(true);
-            lblUser.setVisible(true);
-        } else {
-            tbl_Inventory.setFocusable(false);
-            btn_inventoryPanel_Add.setVisible(false);
-            btn_inventoryPanel_Update.setVisible(false);
-            lblUser.setText("USER LOGGED IN");
+
+        switch (accessType) {
+            case "admin":
+                btn_inventoryPanel_Add.setVisible(true);
+                btn_inventoryPanel_Update.setVisible(true);
+                lblUser.setVisible(true);
+                break;
+            case "user":
+                btn_inventoryPanel_Add.setVisible(false);
+                btn_inventoryPanel_Update.setVisible(false);
+                lblUser.setText("USER LOGGED IN");
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Invalid access!");
+                break;
         }
     }
 
@@ -182,7 +188,11 @@ public class POSForm extends javax.swing.JFrame {
         inventoryPanel = new javax.swing.JPanel();
         viewInventoryPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_Inventory = new javax.swing.JTable();
+        tbl_Inventory = new javax.swing.JTable() {
+            public boolean isCellEditable(int row,int column){
+                return false;
+            }
+        };
         jLabel1 = new javax.swing.JLabel();
         HEADER = new javax.swing.JPanel();
         logo = new javax.swing.JLabel();
@@ -333,6 +343,7 @@ public class POSForm extends javax.swing.JFrame {
         lblSelect.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblSelect.setText("Select a product: ");
 
+        cmbProducts.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         cmbProducts.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbProductsActionPerformed(evt);
@@ -1079,14 +1090,6 @@ public class POSForm extends javax.swing.JFrame {
 
         viewInventoryPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        tbl_Inventory.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
         tbl_Inventory.setFocusable(false);
         jScrollPane1.setViewportView(tbl_Inventory);
 
@@ -1513,14 +1516,10 @@ public class POSForm extends javax.swing.JFrame {
     private void refreshOrderList(Transaction trans) {
         /* Populate order list from table data */
         trans.setSubtotal(0);           //resets all transaction values first
-        trans.setVATvalue(0);           //because everytime there is a change on the table
+        trans.setVATvalue(0);           //because everytime there is a change (added, removed, edited, etc.) on the table
         trans.setTotalPriceWithVat(0);  //this method is called
         trans.resetOrderList();
 
-        /*if (tbl_YourCart.getRowCount() > 0) {
-         btn_reviewPanel_ResumeShopping.setVisible(false);
-         btn_reviewPanel_Checkout.setVisible(false);
-         }*/
         for (int i = 0; i < tbl_YourCart.getRowCount(); i++) {               //iterate over table and get data per row
             String name = tbl_YourCart.getValueAt(i, 0).toString();
             double price = (Double) tbl_YourCart.getValueAt(i, 1);
@@ -1528,7 +1527,7 @@ public class POSForm extends javax.swing.JFrame {
             double totalPrice = (Double) tbl_YourCart.getValueAt(i, 3);
             trans.addToOrderList(name, price, quantity, totalPrice);        //add row data to order list
         }
-        trans.compute();                                 //compute transactions based on ORDER LIST
+        trans.compute();                                 //compute transactions based on ORDER LIST, see Transaction class
         txt_cartPanel_TotalPrice.setText(String.format("₱%.2f", trans.getTotalPrice()));
     }
 
@@ -1552,7 +1551,7 @@ public class POSForm extends javax.swing.JFrame {
          */
         if (Integer.parseInt(txt_productPanel_Quantity.getText()) > 0) {
             boolean inputAccepted = false;
-            int quantity = 0;
+            int quantity;
             OUTER:
             while (!inputAccepted) {
                 String answer = txt_productPanel_OrderQuantity.getText(); //orderSpinner.getValue().toString();
@@ -1744,9 +1743,6 @@ public class POSForm extends javax.swing.JFrame {
 
     private void btn_reviewPanel_AddToCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reviewPanel_AddToCartActionPerformed
         addOrder();
-        btn_reviewPanel_Checkout.setVisible(true);
-        btn_reviewPanel_ResumeShopping.setVisible(true);
-        btn_reviewPanel_CancelOrder.setVisible(false);
     }//GEN-LAST:event_btn_reviewPanel_AddToCartActionPerformed
 
     private void addOrder() {
@@ -1756,8 +1752,8 @@ public class POSForm extends javax.swing.JFrame {
 
         tbl_YourCart.setModel(orderData);
 
-        int currStock = 0;
-        int quantity = 0;
+        int currStock;
+        int quantity;
         try {
             currStock = Integer.parseInt(txt_reviewPanel_CurrentStock.getText());
             quantity = Integer.parseInt(txt_reviewPanel_OrderQuantity.getText());
@@ -1772,9 +1768,9 @@ public class POSForm extends javax.swing.JFrame {
                 String id = null;
                 int listedQuantity = 0;
                 int i = 0;
-                if (!isEmpty(tbl_YourCart)) {
+                if (!isEmpty(tbl_YourCart)) {                           //checks if cart is empty
                     for (i = 0; i < tbl_YourCart.getRowCount(); i++) {
-                        id = tbl_YourCart.getValueAt(i, 0).toString();
+                        id = tbl_YourCart.getValueAt(i, 0).toString();          //if order is already in the cart, it gets the previous order quantity
                         if (pName.equals(id)) {
                             listedQuantity = (Integer) tbl_YourCart.getValueAt(i, 2);
                             break;
@@ -1783,17 +1779,21 @@ public class POSForm extends javax.swing.JFrame {
                 }
 
                 if (pName.equals(id)) {
-                    int totalQuantity = quantity + listedQuantity;
+                    int totalQuantity = quantity + listedQuantity;              //then adds that to the current order quantity
                     totalPrice = totalQuantity * price;
-                    orderData.setValueAt(totalQuantity, i, 2);
+                    orderData.setValueAt(totalQuantity, i, 2);                  //updates the cart to the total order quantity
                     orderData.setValueAt(totalPrice, i, 3);
                 } else {
-                    orderData.addRow(data);
+                    orderData.addRow(data);                                     //if order is not in the cart, then simply add it to the cart
                 }
 
                 updateProductAvail(pName, quantity);        //updates the current available stock based on current orders
 
                 fh.writeAuditTrail("The item: " + pName + " count: " + quantity + " added to list. " + getTimeStamp());
+
+                btn_reviewPanel_Checkout.setVisible(true);
+                btn_reviewPanel_ResumeShopping.setVisible(true);
+                btn_reviewPanel_CancelOrder.setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(this, "Item out of stock.");
             }
@@ -1826,7 +1826,7 @@ public class POSForm extends javax.swing.JFrame {
         CardLayout card = (CardLayout) transactionPanel.getLayout();
         card.show(transactionPanel, "productCard");
 
-        if (orderData.getRowCount() > 0) {
+        if (!isEmpty(tbl_YourCart)) {
             btn_productPanel_Checkout.setVisible(true);
         } else {
             btn_productPanel_Checkout.setVisible(false);
@@ -1872,7 +1872,7 @@ public class POSForm extends javax.swing.JFrame {
     private void btn_cartPanel_AddMoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cartPanel_AddMoreActionPerformed
         CardLayout card = (CardLayout) transactionPanel.getLayout();
         card.show(transactionPanel, "productCard");
-        if (orderData.getRowCount() > 0) {
+        if (!isEmpty(tbl_YourCart)) {
             btn_productPanel_Checkout.setVisible(true);
         } else {
             btn_productPanel_Checkout.setVisible(false);
@@ -2183,7 +2183,7 @@ public class POSForm extends javax.swing.JFrame {
 
                 String id = null;
                 int listedQuantity = 0;
-                int i = 0;
+                int i;
                 for (i = 0; i < prod.productList.size(); i++) {
                     id = prod.productList.get(i).getProductName();
                     if (name.equals(id)) {
